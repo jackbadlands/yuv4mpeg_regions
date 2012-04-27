@@ -172,6 +172,26 @@ int main(int argc, char* argv[]) {
         return 8;
     }
 
+    /* Sanity check for input sizes */
+    for (i=0; i<output_count; ++i) {
+        struct output *out = &outputs[i];
+        if(out->x < 0 || out->x + out->w > w) { fprintf(stderr, "Horiz out of bounds for output %d\n", i); return 11;}
+        if(out->y < 0 || out->y + out->h > h) { fprintf(stderr, "Vert out of bounds for output %d\n", i); return 11;}
+        if(out->w <= 0) { fprintf(stderr, "Invalid width for output %d\n", i); return 11; }
+        if(out->h <= 0) { fprintf(stderr, "Invalid height for output %d\n", i); return 11; }
+        int j;
+        for(j=0; j<plane_count; ++j) {
+            if(out->w % planes[j].horizontal_subsampling) {
+                fprintf(stderr, "Output width should be divisible by %d\n", planes[j].horizontal_subsampling);
+                return 11;
+            }
+            if(out->h % planes[j].vertical_subsampling) {
+                fprintf(stderr, "Output height should be divisible by %d\n", planes[j].vertical_subsampling);
+                return 11;
+            }
+        }
+    }
+
     buffer = (unsigned char*) malloc(h*w);
 
     while(!feof(stdin)) {
