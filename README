@@ -1,0 +1,8 @@
+Simple program that reads one yuv4mpeg input and writes to multiple yuv4mpeg pipes that correspond to some geometric rectangular region of video input.
+
+Example: splitting video into two ones horizontally and playing both parts:
+
+    mkfifo 0_0_426_480.yuv 427_0_426_480.yuv
+    mplayer -really-quiet  -noconsolecontrols 0_0_426_480.yuv&
+    mplayer -really-quiet  -noconsolecontrols 427_0_426_480.yuv&
+    mplayer -really-quiet misc/big_buck_bunny_480p_stereo.avi -vo yuv4mpeg:file=/dev/stdout | ./yuv4mpegsplit 0_0_426_480.yuv 427_0_426_480.yuv
