@@ -52,7 +52,7 @@ void output_part_of_video_frame(struct output *out, int j) {
 int main(int argc, char* argv[]) {
     int i;
     if (argc<=1) {
-        fprintf(stderr, "Usage: yuv4mpegsplit 0_0_1024_768.yuv 1024_0_1024_768.yuv x_y_width_height.yuv... < input.yuv\n");
+        fprintf(stderr, "Usage: yuv4mpeg_regions 0_0_1024_768.yuv 1024_0_1024_768.yuv x_y_width_height.yuv... < input.yuv\n");
         return 1;
     }
     outputs = (struct output*) malloc(argc*sizeof(*outputs));
